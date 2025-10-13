@@ -12,8 +12,8 @@ importers:
         specifier: ^1.20.0
         version: 1.20.0
       mcp-handler:
-        specifier: ^1.0.2
-        version: 1.0.2(@modelcontextprotocol/sdk@1.20.0)(next@15.5.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0))
+        specifier: 0.0.0-26e55319-20251013185604
+        version: 0.0.0-26e55319-20251013185604(@modelcontextprotocol/sdk@1.20.0)(next@15.5.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(zod@3.24.2)
       next:
         specifier: 15.5.4
         version: 15.5.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -679,14 +679,17 @@ packages:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
     engines: {node: '>= 0.4'}
 
-  mcp-handler@1.0.2:
-    resolution: {integrity: sha512-dTZR0KZ0rqIORHFUmG4wFMJwp608gtc2x602hxaFQOmb0L2Ahc++Vcc6QoRWr92VTK7DQmEIqrHbhVCjomTplg==}
+  mcp-handler@0.0.0-26e55319-20251013185604:
+    resolution: {integrity: sha512-Gj2IJ+e1LREVuUy5hh//MALCJ5dVD1i56SfmFDIGkT8ydaNanYzLMdAALM0+sOUYzn25QJ7I9swN2NDtfQN32Q==}
     hasBin: true
     peerDependencies:
-      '@modelcontextprotocol/sdk': ^1.12.0
+      '@modelcontextprotocol/sdk': ^1.17.2
       next: '>=13.0.0'
+      zod: ^3.0.0
     peerDependenciesMeta:
       next:
+        optional: true
+      zod:
         optional: true
 
   media-typer@1.1.0:
@@ -1523,7 +1526,7 @@ snapshots:
 
   math-intrinsics@1.1.0: {}
 
-  mcp-handler@1.0.2(@modelcontextprotocol/sdk@1.20.0)(next@15.5.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)):
+  mcp-handler@0.0.0-26e55319-20251013185604(@modelcontextprotocol/sdk@1.20.0)(next@15.5.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(zod@3.24.2):
     dependencies:
       '@modelcontextprotocol/sdk': 1.20.0
       chalk: 5.6.2
@@ -1531,6 +1534,7 @@ snapshots:
       redis: 4.7.1
     optionalDependencies:
       next: 15.5.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      zod: 3.24.2
 
   media-typer@1.1.0: {}
 

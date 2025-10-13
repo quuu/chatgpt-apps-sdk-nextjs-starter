@@ -1,5 +1,5 @@
 import { baseURL } from "@/baseUrl";
-import { createMcpHandler } from "mcp-handler";
+import { createMcpHandler, experimental_createWidget } from "mcp-handler";
 import { z } from "zod";
 
 const getAppsSdkCompatibleHtml = async (baseUrl: string, path: string) => {
@@ -30,54 +30,17 @@ function widgetMeta(widget: ContentWidget) {
 const handler = createMcpHandler(async (server) => {
   const html = await getAppsSdkCompatibleHtml(baseURL, "/");
 
-  const contentWidget: ContentWidget = {
-    id: "show_content",
-    title: "Show Content",
-    templateUri: "ui://widget/content-template.html",
-    invoking: "Loading content...",
-    invoked: "Content loaded",
-    html: html,
-    description: "Displays the homepage content",
-  };
-  server.registerResource(
-    "content-widget",
-    contentWidget.templateUri,
-    {
-      title: contentWidget.title,
-      description: contentWidget.description,
-      mimeType: "text/html+skybridge",
-      _meta: {
-        "openai/widgetDescription": contentWidget.description,
-        "openai/widgetPrefersBorder": true,
-      },
+  const newWidget = experimental_createWidget({
+    id: "content-widget",
+    title: "Content Widget",
+    description: "A widget that displays content from the homepage",
+    html,
+    inputSchema: {
+      name: z
+        .string()
+        .describe("The name of the user to display on the homepage"),
     },
-    async (uri) => ({
-      contents: [
-        {
-          uri: uri.href,
-          mimeType: "text/html+skybridge",
-          text: `<html>${contentWidget.html}</html>`,
-          _meta: {
-            "openai/widgetDescription": contentWidget.description,
-            "openai/widgetPrefersBorder": true,
-          },
-        },
-      ],
-    })
-  );
-
-  server.registerTool(
-    contentWidget.id,
-    {
-      title: contentWidget.title,
-      description:
-        "Fetch and display the homepage content with the name of the user",
-      inputSchema: {
-        name: z.string().describe("The name of the user to display on the homepage"),
-      },
-      _meta: widgetMeta(contentWidget),
-    },
-    async ({ name }) => {
+    handler: async ({ name }) => {
       return {
         content: [
           {
@@ -89,10 +52,11 @@ const handler = createMcpHandler(async (server) => {
           name: name,
           timestamp: new Date().toISOString(),
         },
-        _meta: widgetMeta(contentWidget),
       };
-    }
-  );
+    },
+  });
+
+  await newWidget.register(server);
 });
 
 export const GET = handler;
